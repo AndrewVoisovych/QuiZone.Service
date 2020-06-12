@@ -54,6 +54,9 @@ namespace QuiZone.API
 
             app.ConfigureCustomExceptionMiddleware();
 
+            app.UseAuthentication();
+
+          
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -67,10 +70,8 @@ namespace QuiZone.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthentication();
-
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

@@ -25,7 +25,9 @@ namespace QuiZone.DataAccess.Models.Entities
         public int? ModUserId { get; set; }
         public string ImagePath { get; set; }
         public byte[] Access { get; set; }
+        public int AccessId { get; set; }
 
+        public virtual QuizAccess AccessNavigation { get; set; }
         public virtual QuizCategory Category { get; set; }
         public virtual User CreateUser { get; set; }
         public virtual QuizSetting Setting { get; set; }

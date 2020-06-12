@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuiZone.BusinessLogic.Services.Interfaces;
-using QuiZone.DataAccess;
 using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace QuiZone.API.Controllers
 {
     [Route("api/quiz")]
     [ApiController]
+    [Authorize(Roles ="User")]
     public class QuizController : BaseController<Quiz, QuizDTO>
     {
         private readonly IQuizService quizService;
@@ -22,6 +22,7 @@ namespace QuiZone.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var result = await quizService.GetAllAsync();
@@ -30,16 +31,14 @@ namespace QuiZone.API.Controllers
                 ? Ok(result)
                 : (IActionResult)NotFound();
         }
+
         
-
-        [HttpGet("questions")]
-        public async Task<IActionResult> GetQuestions(int id)
+        [HttpGet]
+        [Route("start")]
+       
+        public  IActionResult StartQuiz(int id)
         {
-            var result = await quizService.GetQuestionByQuizAsync(id);
-
-            return result.Any()
-                ? Ok(result)
-                : (IActionResult)NotFound();
+            return Ok("DASUKA");
 
         }
 

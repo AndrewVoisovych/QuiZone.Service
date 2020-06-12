@@ -16,7 +16,8 @@ namespace QuiZone.DataAccess.Repository.Implemented
             .Include(e => e.Category)
             .Include(e => e.CreateUser)
             .Include(e => e.Topic)
-            .Include(e => e.Setting);
+            .Include(e => e.Setting)
+            .Include(e => e.AccessNavigation);
     }
 
 

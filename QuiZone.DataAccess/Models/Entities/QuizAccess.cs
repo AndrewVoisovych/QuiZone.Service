@@ -4,24 +4,19 @@ using System.Collections.Generic;
 
 namespace QuiZone.DataAccess.Models.Entities
 {
-    public partial class QuizSetting: IEntity
+    public partial class QuizAccess: IEntity
     {
-        public QuizSetting()
+        public QuizAccess()
         {
             Quiz = new HashSet<Quiz>();
         }
 
         public int Id { get; set; }
-        public bool? RandomPosition { get; set; }
-        public string Price { get; set; }
-        public int? TimerValue { get; set; }
-        public DateTime? DateEnd { get; set; }
+        public string Access { get; set; }
         public DateTime CreateDate { get; set; }
         public int CreateUserId { get; set; }
         public DateTime ModDate { get; set; }
         public int? ModUserId { get; set; }
-        public DateTime? DateStart { get; set; }
-        public bool? BlockTab { get; set; }
 
         public virtual ICollection<Quiz> Quiz { get; set; }
     }

@@ -9,6 +9,9 @@ namespace QuiZone.DataAccess.Models.DTO
         public bool? Price { get; set; }
         public int? TimerValue { get; set; }
         public DateTime? DateEnd { get; set; }
+        public DateTime? DateStart { get; set; }
+        public bool? BlockTab { get; set; }
+
         public int CreateUserId { get; set; }
         public int? ModUserId { get; set; }
 

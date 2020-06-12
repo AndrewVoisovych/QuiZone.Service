@@ -63,9 +63,7 @@ namespace QuiZone.API.Extensions
                     {
                         var accessToken = context.Request.Query["access_token"];
 
-                        if (!string.IsNullOrEmpty(accessToken)
-                            && context.HttpContext.Request.Path
-                                .StartsWithSegments("/issuehub"))
+                        if (!string.IsNullOrEmpty(accessToken))
                             context.Token = accessToken;
 
                         return Task.CompletedTask;

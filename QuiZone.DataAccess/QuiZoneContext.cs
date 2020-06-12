@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using QuiZone.DataAccess.Models.Entities;
 
 namespace QuiZone.DataAccess
@@ -22,6 +23,7 @@ namespace QuiZone.DataAccess
         public virtual DbSet<QuestionCorrectAnswer> QuestionCorrectAnswer { get; set; }
         public virtual DbSet<QuestionOptionsAnswer> QuestionOptionsAnswer { get; set; }
         public virtual DbSet<Quiz> Quiz { get; set; }
+        public virtual DbSet<QuizAccess> QuizAccess { get; set; }
         public virtual DbSet<QuizCategory> QuizCategory { get; set; }
         public virtual DbSet<QuizSetting> QuizSetting { get; set; }
         public virtual DbSet<QuizTopic> QuizTopic { get; set; }
@@ -30,7 +32,6 @@ namespace QuiZone.DataAccess
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<UserSetting> UserSetting { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -343,6 +344,8 @@ namespace QuiZone.DataAccess
                     .HasMaxLength(32)
                     .IsFixedLength();
 
+                entity.Property(e => e.AccessId).HasColumnName("ACCESS_ID");
+
                 entity.Property(e => e.CategoryId).HasColumnName("CATEGORY_ID");
 
                 entity.Property(e => e.CreateDate)
@@ -377,6 +380,12 @@ namespace QuiZone.DataAccess
 
                 entity.Property(e => e.TopicId).HasColumnName("TOPIC_ID");
 
+                entity.HasOne(d => d.AccessNavigation)
+                    .WithMany(p => p.Quiz)
+                    .HasForeignKey(d => d.AccessId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_QUIZ_ACESS_ID");
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Quiz)
                     .HasForeignKey(d => d.CategoryId)
@@ -400,6 +409,33 @@ namespace QuiZone.DataAccess
                     .HasForeignKey(d => d.TopicId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TOPIC_ID");
+            });
+
+            modelBuilder.Entity<QuizAccess>(entity =>
+            {
+                entity.ToTable("QUIZ_ACCESS");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Access)
+                    .IsRequired()
+                    .HasColumnName("ACCESS")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnName("CREATE_DATE")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.CreateUserId).HasColumnName("CREATE_USER_ID");
+
+                entity.Property(e => e.ModDate)
+                    .HasColumnName("MOD_DATE")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.ModUserId).HasColumnName("MOD_USER_ID");
             });
 
             modelBuilder.Entity<QuizCategory>(entity =>
@@ -435,6 +471,8 @@ namespace QuiZone.DataAccess
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
+                entity.Property(e => e.BlockTab).HasColumnName("BLOCK_TAB");
+
                 entity.Property(e => e.CreateDate)
                     .HasColumnName("CREATE_DATE")
                     .HasColumnType("datetime")
@@ -444,6 +482,10 @@ namespace QuiZone.DataAccess
 
                 entity.Property(e => e.DateEnd)
                     .HasColumnName("DATE_END")
+                    .HasColumnType("smalldatetime");
+
+                entity.Property(e => e.DateStart)
+                    .HasColumnName("DATE_START")
                     .HasColumnType("smalldatetime");
 
                 entity.Property(e => e.ModDate)

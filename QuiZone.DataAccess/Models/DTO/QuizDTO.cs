@@ -12,9 +12,14 @@ namespace QuiZone.DataAccess.Models.DTO
         public int SettingId { get; set; }
         public int TopicId { get; set; }
         public string Topic { get; set; }
+        public string ImagePath { get; set; }
+        public QuizSettingsDTO Setting { get; set; }
+        public string AccessHash { get; set; }
+        public int AccessId { get; set; }
+        public string Access { get; set; }
         public DateTime? CreateDate { get; set; }
         public int? CreateUserId { get; set; }
-        public QuizSettingsDTO Setting { get; set; }
-        public string Access { get; set; }
+    
+
     }
 }
