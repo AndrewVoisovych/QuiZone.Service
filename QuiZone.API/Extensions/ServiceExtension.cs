@@ -52,6 +52,8 @@ namespace QuiZone.API.Extensions
             services.AddScoped<IAnswerRepository, AnswerRepository>();
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IQuestionCorrectAnswerRepository, QuestionCorrectAnswerRepository>();
+            services.AddScoped<IQuestionOptionsAnswerRepository, QuestionOptionsAnswerRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
@@ -66,6 +68,8 @@ namespace QuiZone.API.Extensions
                 mc.AddProfile(new QuizProfile());
                 mc.AddProfile(new QuizSettingProfile());
                 mc.AddProfile(new QuestionProfile());
+                mc.AddProfile(new CorrectAnswerProfile());
+                mc.AddProfile(new OptionsAnswerProfile());
             }).CreateMapper());
         }
 

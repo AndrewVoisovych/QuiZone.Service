@@ -9,7 +9,7 @@ namespace QuiZone.DataAccess.Models.Mapping
         public QuestionProfile()
         {
             CreateMap<Question, QuestionDTO>()
-           .ForMember(m => m.QuizId, x => x.MapFrom(src => src.Quiz.Id));
+                .ForMember(m => m.Category, x => x.MapFrom(src => src.Category.Category));
 
             CreateMap<QuestionDTO, Question>()
                     .ForMember(m => m.Id, opt => opt.Ignore())

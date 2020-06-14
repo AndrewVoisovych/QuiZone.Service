@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuiZone.API.Filters;
 using QuiZone.BusinessLogic.Services.Base;
 using QuiZone.DataAccess.Models.Abstractions;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuiZone.API.Controllers
@@ -72,5 +74,17 @@ namespace QuiZone.API.Controllers
                 : Ok(result);
         }
 
+
+        protected int GetAuthUserId()
+        {
+            try
+            {
+                return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+            catch
+            {
+                return -1;
+            }
+        }
     }
 }

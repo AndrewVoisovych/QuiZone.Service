@@ -13,7 +13,6 @@ namespace QuiZone.DataAccess.Repository.Implemented
         }
 
         protected override IQueryable<Question> ComplexEntities => Entities
-            .Include(e => e.Quiz)
             .Include(e => e.Category);
      
     }

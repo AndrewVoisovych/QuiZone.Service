@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using QuiZone.Common.Helpers;
 
 namespace QuiZone.BusinessLogic.Services
 {
@@ -60,6 +61,16 @@ namespace QuiZone.BusinessLogic.Services
             return questions == null
                 ? null
                 : mapper.Map<IEnumerable<QuestionDTO>>(questions);
+        }
+
+        public string GetEndLinkHash(int userId, int quizId)
+        {
+            string lineForHash = $"{userId}#{quizId}#QuiZoneSecurityHash";
+            string startHashPass = $"{SHA256Hash.ComputeString(lineForHash)}#QuiZoneSecurityHash";
+            string reverseHash = new string(startHashPass.ToCharArray().Reverse().ToArray());
+            string finalHashPass = SHA256Hash.ComputeString(reverseHash);
+
+            return finalHashPass;
         }
     }
 }

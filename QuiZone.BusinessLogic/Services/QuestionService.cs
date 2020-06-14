@@ -7,6 +7,9 @@ using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using QuiZone.DataAccess.Repository.Interfaces;
 using QuiZone.DataAccess.UnitOfWork;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace QuiZone.BusinessLogic.Services
@@ -43,8 +46,59 @@ namespace QuiZone.BusinessLogic.Services
                 : null;
         }
 
-    
-       
-    
+        /// <summary>
+        /// Get all question for select quiz
+        /// </summary>
+        /// <param name="quizId">Id select quiz</param>
+        /// <returns>List questions (includes answers options)</returns>
+        public async Task<IEnumerable<QuestionDTO>> GetAllAsync(int quizId)
+        {
+            var questions = await database.QuestionRepository
+                .GetByCondition(c => c.QuizId == quizId)
+                .ToListAsync();
+
+            if (questions.Any())
+            {
+                Random random = new Random();
+                var questionsDTO = mapper.Map<IEnumerable<QuestionDTO>>(questions);
+                foreach (QuestionDTO question in questionsDTO)
+                {
+
+                    var questionOptionsAnswers = await database.QuestionOptionsAnswerRepository
+                        .GetByCondition(c => c.QuestionId == question.Id)
+                        .Select(s => s.Answer)
+                        .ToListAsync();
+
+                    var questionCorrectAnswers = await database.QuestionCorrectAnswerRepository
+                         .GetByCondition(c => c.QuestionId == question.Id)
+                         .Select(s => s.Answer)
+                         .ToListAsync();
+
+
+                    var resultQuestionOptionsAnswers = mapper.Map<IEnumerable<AnswerDTO>>(questionOptionsAnswers);
+                    var resultQuestionCorrectAnswers = mapper.Map<IEnumerable<AnswerDTO>>(questionCorrectAnswers);
+
+                    question.Answers = resultQuestionCorrectAnswers
+                        .Concat(resultQuestionOptionsAnswers)
+                        .OrderBy(o => random.Next());
+                }
+
+                return questionsDTO;
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<int> GetCountQuestionFromQuiz(int quizId)
+        {
+            var questions = await database.QuestionRepository
+               .GetByCondition(c => c.QuizId == quizId)
+               .CountAsync();
+
+            return questions;
+        }
     }
 }

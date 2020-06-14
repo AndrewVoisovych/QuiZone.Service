@@ -11,6 +11,8 @@ namespace QuiZone.DataAccess.UnitOfWork
         ITokenRepository TokenRepository { get; }
         IAnswerRepository AnswerRepository { get; }
         IQuestionRepository QuestionRepository { get; }
+        IQuestionCorrectAnswerRepository QuestionCorrectAnswerRepository { get; }
+        IQuestionOptionsAnswerRepository QuestionOptionsAnswerRepository { get; }
 
         Task<bool> SaveAsync();
     }

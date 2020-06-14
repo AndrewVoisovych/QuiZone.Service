@@ -7,6 +7,7 @@ using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using QuiZone.DataAccess.Repository.Interfaces;
 using QuiZone.DataAccess.UnitOfWork;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuiZone.BusinessLogic.Services

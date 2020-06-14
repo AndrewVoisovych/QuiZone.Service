@@ -5,20 +5,23 @@ using QuiZone.BusinessLogic.Services.Interfaces;
 using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuiZone.API.Controllers
 {
     [Route("api/quiz")]
     [ApiController]
-    [Authorize(Roles ="User")]
+   
     public class QuizController : BaseController<Quiz, QuizDTO>
     {
         private readonly IQuizService quizService;
-        public QuizController(IMapper mapper, IQuizService quizService)
+        private readonly IQuestionService questionService;
+        public QuizController(IMapper mapper, IQuizService quizService, IQuestionService questionService)
             : base(mapper, quizService)
         {
             this.quizService = quizService;
+            this.questionService = questionService;
         }
 
         [HttpGet]
@@ -32,14 +35,46 @@ namespace QuiZone.API.Controllers
                 : (IActionResult)NotFound();
         }
 
-        
         [HttpGet]
-        [Route("start")]
+        [Route("start/{quizId}")]
        
-        public  IActionResult StartQuiz(int id)
+        public async Task<IActionResult> StartQuizAsync([FromRoute]int quizId)
         {
-            return Ok("DASUKA");
+            var result = await questionService.GetAllAsync(quizId);
 
+            return result != null
+                ? Ok(result)
+                : (IActionResult)NotFound();
+        }
+
+
+        [HttpGet]
+        [Route("end/link/{quizId}")]
+        [Authorize]
+        public IActionResult EndQuizAsync([FromRoute]int quizId)
+        {
+            var userId = base.GetAuthUserId();
+            if(userId < 0)
+            {
+                return BadRequest("Користувача не розпізнано");
+            }
+            else
+            {
+                string hash = quizService.GetEndLinkHash(userId, quizId);
+                return Ok(hash);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("question/count/{quizId}")]
+        public async Task<IActionResult> GetCountQuestionFromQuizAsync([FromRoute]int quizId)
+        {
+            var quiz = await quizService.GetAsync(quizId);
+
+            return quiz != null 
+                ? Ok(await questionService.GetCountQuestionFromQuiz(quizId))
+                : (IActionResult)NotFound();
         }
 
     }

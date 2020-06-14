@@ -22,7 +22,8 @@ namespace QuiZone.DataAccess.UnitOfWork
         private TokenRepository tokenRepository;
         private AnswerRepository answerRepository;
         private QuestionRepository questionRepository;
-
+        private QuestionCorrectAnswerRepository questionCorrectAnswerRepository;
+        private QuestionOptionsAnswerRepository questionOptionsAnswerRepository;
 
         public UnitOfWork(QuiZoneContext context, ILoggerManager logger)
         {
@@ -35,7 +36,11 @@ namespace QuiZone.DataAccess.UnitOfWork
         public ITokenRepository TokenRepository => tokenRepository ??= new TokenRepository(context);
         public IAnswerRepository AnswerRepository => answerRepository ??= new AnswerRepository(context);
         public IQuestionRepository QuestionRepository => questionRepository ??= new QuestionRepository(context);
+        public IQuestionCorrectAnswerRepository QuestionCorrectAnswerRepository => 
+            questionCorrectAnswerRepository ??= new QuestionCorrectAnswerRepository(context);
 
+        public IQuestionOptionsAnswerRepository QuestionOptionsAnswerRepository =>
+             questionOptionsAnswerRepository ??= new QuestionOptionsAnswerRepository(context);
 
         public async Task<bool> SaveAsync()
         {

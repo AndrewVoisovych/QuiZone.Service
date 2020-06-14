@@ -1,9 +1,10 @@
-﻿using System;
+﻿using QuiZone.DataAccess.Models.Abstractions;
+using System;
 using System.Collections.Generic;
 
 namespace QuiZone.DataAccess.Models.Entities
 {
-    public partial class QuestionCorrectAnswer
+    public partial class QuestionCorrectAnswer: IEntity
     {
         public int Id { get; set; }
         public int QuestionId { get; set; }
