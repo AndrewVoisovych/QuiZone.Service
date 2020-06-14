@@ -48,7 +48,7 @@ namespace QuiZone.API.Extensions
                 ClockSkew = TimeSpan.Zero
             };
 
-            _ = services.AddAuthentication(options =>
+            services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
