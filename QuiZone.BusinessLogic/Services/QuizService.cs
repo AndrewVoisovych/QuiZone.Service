@@ -51,6 +51,18 @@ namespace QuiZone.BusinessLogic.Services
                 : null;
         }
 
+        public async override Task<IEnumerable<QuizDTO>> GetAllAsync()
+        {
+            var allQuiz = await repository
+                .GetByCondition(c => c.AccessId == 1)
+                .OrderByDescending(o => o.CreateDate)
+                .ToListAsync();
+                        
+            return allQuiz == null
+                ? null
+                : mapper.Map<IEnumerable<QuizDTO>>(allQuiz);
+        }
+
 
         public async Task<IEnumerable<QuestionDTO>> GetQuestionByQuizAsync(int id)
         {

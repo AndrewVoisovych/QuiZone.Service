@@ -63,24 +63,37 @@ namespace QuiZone.BusinessLogic.Services
                 var questionsDTO = mapper.Map<IEnumerable<QuestionDTO>>(questions);
                 foreach (QuestionDTO question in questionsDTO)
                 {
-
-                    var questionOptionsAnswers = await database.QuestionOptionsAnswerRepository
+                    if (question.CategoryId != 3 && question.CategoryId != 4)
+                    {
+                        var questionOptionsAnswers = await database.QuestionOptionsAnswerRepository
                         .GetByCondition(c => c.QuestionId == question.Id)
                         .Select(s => s.Answer)
                         .ToListAsync();
 
-                    var questionCorrectAnswers = await database.QuestionCorrectAnswerRepository
-                         .GetByCondition(c => c.QuestionId == question.Id)
-                         .Select(s => s.Answer)
-                         .ToListAsync();
+                        var questionCorrectAnswers = await database.QuestionCorrectAnswerRepository
+                        .GetByCondition(c => c.QuestionId == question.Id)
+                        .Select(s => s.Answer)
+                        .ToListAsync();
 
+                        var resultQuestionOptionsAnswers = mapper.Map<IEnumerable<AnswerDTO>>(questionOptionsAnswers);
+                        var resultQuestionCorrectAnswers = mapper.Map<IEnumerable<AnswerDTO>>(questionCorrectAnswers);
 
-                    var resultQuestionOptionsAnswers = mapper.Map<IEnumerable<AnswerDTO>>(questionOptionsAnswers);
-                    var resultQuestionCorrectAnswers = mapper.Map<IEnumerable<AnswerDTO>>(questionCorrectAnswers);
+                        question.Answers = resultQuestionCorrectAnswers
+                            .Concat(resultQuestionOptionsAnswers)
+                            .OrderBy(o => random.Next());
+                    }
+                    else
+                    {
+                       
+                        var enumerableAnswerBody = new[] { new AnswerDTO()
+                            {
+                                Body = ""
+                            }
+                        };
 
-                    question.Answers = resultQuestionCorrectAnswers
-                        .Concat(resultQuestionOptionsAnswers)
-                        .OrderBy(o => random.Next());
+                        question.Answers = enumerableAnswerBody;
+
+                    }
                 }
 
                 return questionsDTO;
