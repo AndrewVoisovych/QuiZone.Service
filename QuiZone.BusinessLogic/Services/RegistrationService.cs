@@ -1,5 +1,3 @@
-using System.Net;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QuiZone.BusinessLogic.Services.Interfaces;
@@ -11,6 +9,8 @@ using QuiZone.DataAccess.Models.Const;
 using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using QuiZone.DataAccess.UnitOfWork;
+using System.Net;
+using System.Threading.Tasks;
 using static System.String;
 
 namespace QuiZone.BusinessLogic.Services
@@ -50,7 +50,7 @@ namespace QuiZone.BusinessLogic.Services
             insertUser.Password = SHA256Hash.Compute(inputPassword);
 
             // User data after update/insert
-            User insertedUser = new User();
+            User insertedUser;
 
            insertUser.RoleId = (int)UserRolesEnum.USER;
            insertedUser = await database.UserRepository.InsertAsync(insertUser);
@@ -107,19 +107,19 @@ namespace QuiZone.BusinessLogic.Services
             bool isHashEqual = EmailConfirmHelper.EqualHash(hash, hashConfirmData);
 
 
-            if (isHashEqual)
+            if (!isHashEqual)
             {
-                var existedUser = await database.UserRepository.GetByIdAsync(userDTO.Id);
-
-                existedUser.Verification = true;
-                var updatedUser = database.UserRepository.Update(existedUser);
-                bool isSave = await database.SaveAsync();
-
-                return isSave;
-
+                return false;
             }
 
-            return false;
+            var existedUser = await database.UserRepository.GetByIdAsync(userDTO.Id);
+
+            existedUser.Verification = true;
+            var updatedUser = database.UserRepository.Update(existedUser);
+            bool isSave = await database.SaveAsync();
+
+            return isSave;
+
         }
 
     }

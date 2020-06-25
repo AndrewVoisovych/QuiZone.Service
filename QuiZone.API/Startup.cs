@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
 using QuiZone.API.Extensions;
-using System;
 using System.IO;
 
 namespace QuiZone.API
@@ -14,7 +13,7 @@ namespace QuiZone.API
     {
         public Startup(IConfiguration configuration)
         {
-            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
             EmailConfiguration = configuration;
         }

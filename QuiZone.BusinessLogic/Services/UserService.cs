@@ -7,7 +7,6 @@ using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using QuiZone.DataAccess.Repository.Interfaces;
 using QuiZone.DataAccess.UnitOfWork;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuiZone.BusinessLogic.Services
@@ -44,17 +43,5 @@ namespace QuiZone.BusinessLogic.Services
                 : null;
         }
 
-        public async Task<UserDTO> GetUserByEmailAsync(string email)
-        {
-            var user = await database.UserRepository
-                .GetByCondition(x => x.Email == email)
-                .FirstOrDefaultAsync();
-
-            return user == null
-                ? null
-                : mapper.Map<User, UserDTO>(user);
-        }
-
-    
     }
 }

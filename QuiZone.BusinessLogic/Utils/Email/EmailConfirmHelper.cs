@@ -17,7 +17,7 @@ namespace QuiZone.BusinessLogic.Utils.Email
         /// <returns>hash string for verification</returns>
         public static string GetHash(int id, bool emailValid, string email)
         {
-            string lineForHash = $"{id}#{emailValid.ToString()}#{email}";
+            string lineForHash = $"{id}#{emailValid}#{email}";
             string firstHashPass = SHA256Hash.ComputeString(lineForHash);
             string reverseHash =  new string(firstHashPass.ToCharArray().Reverse().ToArray());
             string secondHashPass = SHA256Hash.ComputeString(reverseHash);

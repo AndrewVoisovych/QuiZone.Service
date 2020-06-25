@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using QuiZone.BusinessLogic.Utils.JwtAuth;
@@ -79,7 +78,8 @@ namespace QuiZone.API.Extensions
         private static string GenerateTokenKey(int length)
         {
             var characterArray =
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789".ToCharArray();
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789"
+                    .ToCharArray();
 
             var bytes = new byte[length * 8];
             new RNGCryptoServiceProvider().GetBytes(bytes);

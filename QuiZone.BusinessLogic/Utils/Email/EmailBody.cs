@@ -9,7 +9,7 @@
 
             public static string GetBodyMessage(string userName, string login, string confirmEmailLink)
             {
-                return 
+                return
                     $"Привіт, {userName}. <br> " +
                     $"Тобі пише сайт -  QuiZone. <br>" +
                     $" Твій логін: <b>{login}</b> <br> " +

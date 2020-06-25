@@ -12,6 +12,6 @@ namespace QuiZone.BusinessLogic.Services.Interfaces
     public interface IQuizService : ICrudService<QuizDTO, Quiz>
     {
         Task<IEnumerable<QuestionDTO>> GetQuestionByQuizAsync(int id);
-        public string GetEndLinkHash(int userId, int quizId);
+        string GetEndLinkHash(int userId, int quizId);
     }   
 }

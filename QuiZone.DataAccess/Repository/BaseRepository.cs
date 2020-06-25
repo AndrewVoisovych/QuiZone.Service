@@ -15,7 +15,7 @@ namespace QuiZone.DataAccess.Repository
         private readonly QuiZoneContext context;
         protected DbSet<T> entities;
 
-        public BaseRepository(QuiZoneContext context)
+        protected BaseRepository(QuiZoneContext context)
         {
             this.context = context;
         }
@@ -81,7 +81,7 @@ namespace QuiZone.DataAccess.Repository
 
 
         // DbSet Entry
-        protected virtual DbSet<T> Entities => entities ?? (entities = context.Set<T>());
+        protected virtual DbSet<T> Entities => entities ??= context.Set<T>();
 
         protected virtual IQueryable<T> ComplexEntities => Entities;
 

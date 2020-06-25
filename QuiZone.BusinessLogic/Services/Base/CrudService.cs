@@ -3,7 +3,6 @@ using QuiZone.Common.LoggerService;
 using QuiZone.DataAccess.Models.Abstractions;
 using QuiZone.DataAccess.Repository;
 using QuiZone.DataAccess.UnitOfWork;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace QuiZone.BusinessLogic.Services.Base
         /// </summary>
         /// <param name="unitOfWork">Unit of work pattern</param>
         /// <param name="logger">Log on error</param>
-        public CrudService(IUnitOfWork database,
+        protected CrudService(IUnitOfWork database,
             ILoggerManager logger,
             IBaseRepository<TEntity> repository,
             IMapper mapper)

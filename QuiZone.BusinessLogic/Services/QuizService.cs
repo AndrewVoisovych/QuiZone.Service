@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using QuiZone.BusinessLogic.Services.Base;
 using QuiZone.BusinessLogic.Services.Interfaces;
+using QuiZone.Common.Helpers;
 using QuiZone.Common.LoggerService;
 using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
@@ -8,10 +10,8 @@ using QuiZone.DataAccess.Repository.Interfaces;
 using QuiZone.DataAccess.UnitOfWork;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using QuiZone.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace QuiZone.BusinessLogic.Services
 {
@@ -51,7 +51,7 @@ namespace QuiZone.BusinessLogic.Services
                 : null;
         }
 
-        public async override Task<IEnumerable<QuizDTO>> GetAllAsync()
+        public override async Task<IEnumerable<QuizDTO>> GetAllAsync()
         {
             var allQuiz = await repository
                 .GetByCondition(c => c.AccessId == 1)

@@ -84,6 +84,7 @@ namespace QuiZone.BusinessLogic.Services
                     }
                     else
                     {
+                        // temp logic
                        
                         var enumerableAnswerBody = new[] { new AnswerDTO()
                             {
@@ -99,10 +100,8 @@ namespace QuiZone.BusinessLogic.Services
                 return questionsDTO;
 
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public async Task<int> GetCountQuestionFromQuiz(int quizId)

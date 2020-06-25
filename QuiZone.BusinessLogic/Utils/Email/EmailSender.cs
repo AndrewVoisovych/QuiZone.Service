@@ -1,5 +1,4 @@
 using QuiZone.DataAccess.Models.Const;
-using System;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -61,7 +60,7 @@ namespace QuiZone.BusinessLogic.Utils.Email
                 Credentials = new NetworkCredential(fromAddressData.Address, SenderPassword)
             };
 
-            using var message = new MailMessage(fromAddressData, toAddressData)
+            using MailMessage message = new MailMessage(fromAddressData, toAddressData)
             {
                 Subject = SubjectMessage,
                 Body = BodyMessage,

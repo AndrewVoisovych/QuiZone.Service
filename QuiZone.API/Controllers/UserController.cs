@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using QuiZone.BusinessLogic.Services.Interfaces;
-using QuiZone.BusinessLogic.Utils.Email;
 using QuiZone.Common.GlobalErrorHandling;
 using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
@@ -24,7 +22,7 @@ namespace QuiZone.API.Controllers
             : base(mapper, userService)
         {
             this.userService = userService;
-            this.registrationService = registrationService;  
+            this.registrationService = registrationService;
         }
 
         [HttpGet]
@@ -42,7 +40,7 @@ namespace QuiZone.API.Controllers
         {
             var result = await registrationService.InsertUserAsync(obj);
 
-            return result  == null
+            return result == null
                ? (IActionResult)BadRequest()
                 : Created($"api/[controller]/{result.Id}", result);
         }
@@ -50,7 +48,7 @@ namespace QuiZone.API.Controllers
 
         [HttpGet]
         [Route("email/{email}")]
-        public async Task<ActionResult<UserDTO>> GetByEmail([FromRoute]string email)
+        public async Task<ActionResult<UserDTO>> GetByEmail([FromRoute] string email)
         {
             var dto = await registrationService.GetUserByEmailAsync(email);
 
@@ -65,7 +63,7 @@ namespace QuiZone.API.Controllers
 
         [HttpPut]
         [Route("confirm/{email}/{hash}")]
-        public async Task<IActionResult> ConfirmEmail([FromRoute]string email, [FromRoute]string hash)
+        public async Task<IActionResult> ConfirmEmail([FromRoute] string email, [FromRoute] string hash)
         {
             var existedUser = await registrationService.GetUserByEmailAsync(email);
 
@@ -88,7 +86,7 @@ namespace QuiZone.API.Controllers
 
         }
 
-       
+
 
     }
 }

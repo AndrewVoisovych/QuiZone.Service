@@ -69,11 +69,6 @@ namespace QuiZone.DataAccess.UnitOfWork
             }
         }
 
-        public void Dispose()
-        {
-            context.Dispose();
-        }
-
-
+        public void Dispose() => context.Dispose();
     }
 }

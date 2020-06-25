@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using QuiZone.DataAccess.Models.Const;
 using System.IO;
 
 namespace QuiZone.API.Utils.Helpers

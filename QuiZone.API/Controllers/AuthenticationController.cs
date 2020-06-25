@@ -20,22 +20,20 @@ namespace QuiZone.API.Controllers
         }
 
         [HttpPost("authenticate")]
-        public async Task<ActionResult<TokenDTO>> SignIn([FromBody]SignInDTO credentials)
+        public async Task<ActionResult<TokenDTO>> SignIn([FromBody] SignInDTO credentials)
         {
             var result = await authenticationService.SignInAsync(credentials.Email, credentials.Password);
 
-            return result == null 
-                ? (ActionResult<TokenDTO>)BadRequest() 
-                : result;
+            return result ?? (ActionResult<TokenDTO>)BadRequest();
         }
 
         [HttpPost("refresh_token")]
         public async Task<IActionResult> RefreshToken([FromBody] TokenDTO token)
         {
             var result = await authenticationService.TokenAsync(token);
-           
+
             return result != null
-                ? (IActionResult) Ok(result)
+                ? (IActionResult)Ok(result)
                 : Forbid();
         }
 

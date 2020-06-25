@@ -5,14 +5,13 @@ using QuiZone.BusinessLogic.Services.Interfaces;
 using QuiZone.DataAccess.Models.DTO;
 using QuiZone.DataAccess.Models.Entities;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace QuiZone.API.Controllers
 {
     [Route("api/quiz")]
     [ApiController]
-   
+
     public class QuizController : BaseController<Quiz, QuizDTO>
     {
         private readonly IQuizService quizService;
@@ -37,8 +36,8 @@ namespace QuiZone.API.Controllers
 
         [HttpGet]
         [Route("start/{quizId}")]
-       
-        public async Task<IActionResult> StartQuizAsync([FromRoute]int quizId)
+
+        public async Task<IActionResult> StartQuizAsync([FromRoute] int quizId)
         {
             var result = await questionService.GetAllAsync(quizId);
 
@@ -51,28 +50,27 @@ namespace QuiZone.API.Controllers
         [HttpGet]
         [Route("end/link/{quizId}")]
         [Authorize]
-        public IActionResult EndQuizAsync([FromRoute]int quizId)
+        public IActionResult EndQuizAsync([FromRoute] int quizId)
         {
             var userId = base.GetAuthUserId();
-            if(userId < 0)
+            if (userId < 0)
             {
                 return BadRequest("Користувача не розпізнано");
             }
-            else
-            {
-                string hash = quizService.GetEndLinkHash(userId, quizId);
-                return Ok(hash);
-            }
+
+            string hash = quizService.GetEndLinkHash(userId, quizId);
+
+            return Ok(hash);
         }
 
 
         [HttpGet]
         [Route("question/count/{quizId}")]
-        public async Task<IActionResult> GetCountQuestionFromQuizAsync([FromRoute]int quizId)
+        public async Task<IActionResult> GetCountQuestionFromQuizAsync([FromRoute] int quizId)
         {
             var quiz = await quizService.GetAsync(quizId);
 
-            return quiz != null 
+            return quiz != null
                 ? Ok(await questionService.GetCountQuestionFromQuiz(quizId))
                 : (IActionResult)NotFound();
         }

@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuiZone.API.Filters;
 using QuiZone.BusinessLogic.Services.Base;
 using QuiZone.DataAccess.Models.Abstractions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using static System.Int32;
 
 namespace QuiZone.API.Controllers
 {
@@ -17,8 +17,6 @@ namespace QuiZone.API.Controllers
         where TEntity : class, IEntity, new()
         where TEntityDTO : class
     {
-
-     
 
         private readonly ICrudService<TEntityDTO, TEntity> baseService;
         protected readonly IMapper mapper;
@@ -79,7 +77,7 @@ namespace QuiZone.API.Controllers
         {
             try
             {
-                return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                return Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
             }
             catch
             {

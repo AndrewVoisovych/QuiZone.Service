@@ -41,7 +41,7 @@ namespace QuiZone.API.Extensions
             services.AddScoped<IRegistrationService, RegistrationService>();
             services.AddScoped<IQuestionService, QuestionService>();
 
-            services.AddScoped<ICrudService<UserDTO, User>, UserService>(); 
+            services.AddScoped<ICrudService<UserDTO, User>, UserService>();
 
 
         }
