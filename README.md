@@ -2,7 +2,8 @@
 # QuiZone
 The web service for adaptive test generation and automation of knowledge testing has been designed and developed as graduation project. 
 The software is designed to combine the processes of developing, carrying out, and analyzing the results of testing, and in turn, increases the effectiveness of the educational process.
-The service is developed according to the designed client-server architecture, SOLID principles are observed.
+The service is developed according to the designed client-server architecture, SOLID principles are observed. <br>
+**Video Presentation:**  https://bit.ly/3iU6jCi
 
 ## Part of the project: 
   - **backend**: ASP.NET Core Web API with Entity Framework Core.
